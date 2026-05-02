@@ -13,7 +13,6 @@ export default function CustomerLayout({ children }: { children: React.ReactNode
         <div className="max-w-md mx-auto px-4 h-14 flex items-center justify-between">
           <Link
             href="/"
-            // @ts-expect-error — transitionTypes is a new Next.js prop
             transitionTypes={["nav-back"]}
             className="text-lg font-bold tracking-tight text-zinc-900"
           >
@@ -25,7 +24,6 @@ export default function CustomerLayout({ children }: { children: React.ReactNode
 
       <main className="flex-1 max-w-md mx-auto w-full px-4 py-6">
         <ViewTransition
-          // @ts-expect-error — enter/exit/default are new React 19 props
           enter={{ "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" }}
           exit={{ "nav-forward": "nav-forward", "nav-back": "nav-back", default: "none" }}
           default="none"

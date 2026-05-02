@@ -274,7 +274,6 @@ export function AddToCartForm({ menu, addons }: Props) {
   return (
     <div ref={pageRef} className="space-y-6 pb-8">
       {/* ── Cup — ViewTransition name matches MenuCard so they morph on nav ── */}
-      {/* @ts-expect-error — name prop is a new React 19 ViewTransition feature */}
       <ViewTransition name={`menu-${menu.id}`}>
       <div
         className="js-hero relative aspect-square rounded-3xl overflow-hidden -mx-4 sm:mx-0 sm:rounded-3xl"

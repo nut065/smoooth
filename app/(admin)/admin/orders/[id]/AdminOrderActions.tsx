@@ -21,6 +21,7 @@ export function AdminOrderActions({ orderId, status }: Props) {
   if (!action) return null;
 
   async function handleClick() {
+    if (!action) return;
     setBusy(true);
     setError("");
     try {
