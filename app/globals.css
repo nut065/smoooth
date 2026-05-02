@@ -1,26 +1,64 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist);
+  --color-brand: #15803d; /* green-700 — 4.5:1 contrast on white, passes WCAG AA */
+  --color-brand-light: #dcfce7;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fffef9;
+  color: #18181b;
+}
+
+/* ── View Transitions ────────────────────────────────────────────────────────
+   Forward (menu list → detail): content slides left + fades
+   Back    (header logo → menu list): content slides right + fades          */
+
+@keyframes vt-fade-out  { to   { opacity: 0; } }
+@keyframes vt-fade-in   { from { opacity: 0; } }
+@keyframes vt-slide-out-left  { to   { translate: -40px; } }
+@keyframes vt-slide-in-right  { from { translate:  40px; } }
+@keyframes vt-slide-out-right { to   { translate:  40px; } }
+@keyframes vt-slide-in-left   { from { translate: -40px; } }
+
+::view-transition-old(.nav-forward) {
+  animation:
+    150ms ease-in      both vt-fade-out,
+    350ms ease-in-out  both vt-slide-out-left;
+}
+::view-transition-new(.nav-forward) {
+  animation:
+    210ms ease-out 150ms both vt-fade-in,
+    350ms ease-in-out     both vt-slide-in-right;
+}
+
+::view-transition-old(.nav-back) {
+  animation:
+    150ms ease-in      both vt-fade-out,
+    350ms ease-in-out  both vt-slide-out-right;
+}
+::view-transition-new(.nav-back) {
+  animation:
+    210ms ease-out 150ms both vt-fade-in,
+    350ms ease-in-out     both vt-slide-in-left;
+}
+
+/* Header stays pinned — no morph, no slide */
+::view-transition-group(site-header) {
+  animation-duration: 0s;
+  z-index: 100;
+}
+::view-transition-old(site-header) { display: none; }
+::view-transition-new(site-header) { animation: none; }
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay:    0s !important;
+  }
 }
